@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparar Tabelas</title>
+</head>
+<body>
+    <h1>Comparar Tabelas MySQL ⇄ PostgreSQL</h1>
+
+    <form action="/comparar" method="get">
+        <label for="tabela">Nome da tabela:</label>
+        <input type="text" id="tabela" name="tabela" placeholder="Ex: clientes" required>
+        <button type="submit">Comparar</button>
+    </form>
+
+    <hr>
+
+    {% if resultado %}
+        <h2>Resultado — {{ tabela }}</h2>
+
+        <p><strong>{{ resultado.mensagem }}</strong></p>
+
+        {% if resultado.colunas_mysql and resultado.colunas_postgres %}
+            <p><strong>Colunas MySQL:</strong> {{ resultado.colunas_mysql }}</p>
+            <p><strong>Colunas PostgreSQL:</strong> {{ resultado.colunas_postgres }}</p>
+        {% endif %}
+
+        {% if resultado.somente_mysql %}
+            <h3>🟢 Registros somente no MySQL ({{ resultado.somente_mysql|length }})</h3>
+            <pre>{{ resultado.somente_mysql | tojson(indent=2) }}</pre>
+        {% else %}
+            <p>✅ Nenhum registro exclusivo no MySQL.</p>
+        {% endif %}
+
+        {% if resultado.somente_postgres %}
+            <h3>🟠 Registros somente no PostgreSQL ({{ resultado.somente_postgres|length }})</h3>
+            <pre>{{ resultado.somente_postgres | tojson(indent=2) }}</pre>
+        {% else %}
+            <p>✅ Nenhum registro exclusivo no PostgreSQL.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
