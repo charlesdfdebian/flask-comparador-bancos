@@ -7,6 +7,7 @@ import json
 from io import BytesIO
 import subprocess
 
+#desenvolvido por Charles Junqueira
 app = Flask(__name__)
 app.secret_key = "secret-key"
 
